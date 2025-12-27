@@ -1,24 +1,40 @@
-﻿# agentic-rag-law-police-press_assis_chatbot
+⚖️ Law Agent  
+– Explains IPC, CrPC, and Indian laws  
+– Educational purpose only (no legal advice)
 
- 🧠 Agentic RAG System – Law, Police & Press Assistant (India)
+🚓 Police Agent  
+– FIR process, investigation flow, arrest procedures  
+– Procedural and awareness-based explanations
 
-An Agentic AI Assistant designed for India to explain Law ⚖️, Police 🚓 and Press 📰 related queries using RAG (Retrieval Augmented Generation) and multi-agent routing.
+📰 Press Agent  
+– News-style reporting  
+– Neutral tone with journalistic ethics
 
-✨ Features
+🧠 Decide Agent (Decision / Routing Brain)  
+– Analyzes user query intent  
+– Automatically decides whether Law, Police, or Press agent should respond  
+– Does NOT generate answers (decision-only agent)
 
-⚖️ Law Agent – Explains IPC, CrPC, Indian laws (educational only)
+🤖 Agent Router  
+– Executes routing based on Decide Agent output  
+– Supports single-agent mode or multi-agent execution
 
-🚓 Police Agent – FIR, investigation, arrest procedures
+🧠 RAG (Retrieval Augmented Generation)  
+– Uses vector databases (Chroma) for factual grounding  
+– Domain-wise RAG: Law RAG, Police RAG, Press RAG
 
-📰 Press Agent – News-style reporting with journalistic ethics
+💬 Memory  
+– Maintains conversation context across turns  
+– Improves continuity and follow-up understanding
 
-🤖 Agent Router – Auto-selects correct agent
+🧑‍⚖️ Judge Agent (Optional – Advanced)  
+– Evaluates responses from Law, Police, and Press agents  
+– Selects the safest and most accurate answer  
+– Provides confidence score and reasoning
 
-🧠 RAG – Uses vector DB for factual grounding
-
-💬 Memory – Conversation context maintained
-
-🧪 Voting mode – Optional multi-agent judgement
+🧪 Voting / Judge Mode  
+– Optional multi-agent judgement mode  
+– Enterprise-ready Agentic AI pattern
 
 
 
@@ -26,23 +42,30 @@ An Agentic AI Assistant designed for India to explain Law ⚖️, Police 🚓 an
 Frontend (React / Chat UI)
         |
         v
-FastAPI Backend  (main.py)
+FastAPI Backend (main.py)
+        |
+        v
+Decide Agent (decide_agent.py)
         |
         v
 Agent Router (agent_router.py)
         |
-        +----------------------------+
-        |            |               |
-        v            v               v
-     Law Agent    Police Agent    Press Agent
-        |            |               |
-        v            v               v
-     Law RAG DB   Police RAG DB   Press RAG DB
-        |            |               |
-        +------------+---------------+
-                     |
-                     v
-                 LLM (OpenAI / Local)
+        +-------------------------------+
+        |               |               |
+        v               v               v
+     Law Agent      Police Agent     Press Agent
+        |               |               |
+        v               v               v
+     Law RAG DB    Police RAG DB    Press RAG DB
+        |               |               |
+        +---------------+---------------+
+                        |
+                        v
+                Judge Agent (Optional)
+                        |
+                        v
+                  LLM (OpenAI / Local)
+
 
 
 
@@ -58,7 +81,8 @@ AI_project/
 │   │   │   ├── agent_police.py
 │   │   │   ├── agent_press.py
 │   │   │   ├── agent_router.py
-│   │   │   └── decide_agent.py
+│   │   │   ├── decide_agent.py
+│   │   │   └── judge_agent.py  
 │   │   │
 │   │   ├── services/
 │   │   │   ├── rag_retriever.py
@@ -68,10 +92,12 @@ AI_project/
 │   │   │
 │   │   └── main.py
 │   │
-│   ├── data/        # Raw PDFs
-│   ├── text/        # Extracted text
-│   ├── vectordb/    # Chroma vector DBs
+│   ├── data/
+│   ├── text/
+│   ├── vectordb/
 │   └── ingest_*.py
 │
-├── frontend/        # React chat UI
+├── frontend/
 └── README.md
+
+
