@@ -18,6 +18,7 @@ chunks = splitter.split_text(text)
 print(f"Total police chunks: {len(chunks)}")
 
 # 🔢 Embeddings
+# Force CPU to avoid dtype mismatch between float32 inputs and float16 model weights
 embedding = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2",
     model_kwargs={'device': 'cpu'}

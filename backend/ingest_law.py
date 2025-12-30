@@ -20,6 +20,7 @@ chunks = splitter.split_text(full_text)
 print("Total chunks:", len(chunks))
 
 # Create embeddings
+# Force CPU to avoid dtype mismatch between float32 inputs and float16 model weights
 embedding = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2",
     model_kwargs={'device': 'cpu'}
