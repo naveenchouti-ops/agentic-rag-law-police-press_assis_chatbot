@@ -19,7 +19,8 @@ print(f"Total police chunks: {len(chunks)}")
 
 # 🔢 Embeddings
 embedding = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
+    model_name="sentence-transformers/all-MiniLM-L6-v2",
+    model_kwargs={'device': 'cpu'}
 )
 
 # 📦 Vector DB (POLICE)

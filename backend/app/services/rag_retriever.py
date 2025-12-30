@@ -4,7 +4,8 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 
 def retrieve_context(query: str, db_path: str, k: int = 4) -> str:
     embedding = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_kwargs={'device': 'cpu'}
     )
 
     vectordb = Chroma(
