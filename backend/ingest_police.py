@@ -29,5 +29,5 @@ vectordb = Chroma.from_texts(
     persist_directory="vectordb/police_db"
 )
 
-vectordb.persist()
+# Note: .persist() is deprecated. Chroma automatically persists when persist_directory is set
 print("✅ Police vector DB created successfully")

@@ -31,5 +31,5 @@ db = Chroma.from_texts(
     persist_directory="vectordb/law_db"
 )
 
-db.persist()
+# Note: .persist() is deprecated. Chroma automatically persists when persist_directory is set
 print("✅ Law vector DB created")
