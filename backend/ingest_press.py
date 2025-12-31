@@ -36,5 +36,5 @@ vectordb = Chroma.from_texts(
     persist_directory="vectordb/press_db"
 )
 
-vectordb.persist()
+# Note: .persist() is deprecated. Chroma automatically persists when persist_directory is set
 print("✅ Press vector DB created successfully")
