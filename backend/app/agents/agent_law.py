@@ -3,13 +3,53 @@ from app.services.rag_retriever import retrieve_context
 
 
 def law_agent(message: str, memory=None) -> str:
+    """
+    Law Agent: Specialized AI for explaining Indian legal concepts and statutes.
+    
+    LOGIC EXPLANATION (Step-by-step):
+    1. Validate the user's message to ensure it's not empty
+    2. Retrieve relevant legal context from the Law vector database (IPC, CrPC, etc.)
+    3. Build a comprehensive system prompt that defines the agent's role and behavior
+    4. Include RAG context to ground responses in actual legal documents
+    5. Send the prompt + message + memory to OpenAI for response generation
+    6. Return the AI-generated legal explanation with mandatory disclaimer
+    
+    AGENT CAPABILITIES:
+    - Explains IPC sections, CrPC, CPC, IT Act, Motor Vehicles Act
+    - Provides educational legal information for Indian law
+    - Uses Telugu-English mix for accessibility
+    - Includes examples, punishments, and procedure explanations
+    
+    SAFETY FEATURES:
+    - Does NOT provide legal advice (educational only)
+    - Does NOT encourage crime
+    - Does NOT predict case outcomes
+    - Always includes disclaimer about consulting qualified advocates
+    
+    Args:
+        message (str): User's legal query or question
+        memory (list, optional): Previous conversation context for follow-up questions
+        
+    Returns:
+        str: Legal explanation in Telugu-English mix with disclaimer
+        
+    Edge cases handled:
+    - Empty message: Handled by openai_client validation
+    - No matching legal context: Agent responds with general knowledge
+    - Memory is None: Treated as fresh conversation
+    - RAG retrieval errors: Continues with empty context
+    """
+    # Edge case: Validate message
+    if not message or not isinstance(message, str) or not message.strip():
+        return "⚠️ Please provide a valid legal question."
 
-    # 🔍 Retrieve relevant law context from vector DB
+    # Step 1: Retrieve relevant law context from vector DB (RAG)
     law_context = retrieve_context(
         query=message,
         db_path="vectordb/law_db"
     )
 
+    # Step 2: Build comprehensive system prompt with role, rules, and context
     system_prompt = f"""
 You are a LAW ASSISTANT AI designed for India.
 
@@ -52,6 +92,7 @@ ENDING DISCLAIMER (COMPULSORY):
 Idhi legal advice kaadhu. Mee case specific guidance kosam qualified advocate ni consult cheyyandi."
 """
 
+    # Step 3: Call OpenAI with system prompt, user message, and memory
     return ask_openai(system_prompt, message, memory)
 
 
